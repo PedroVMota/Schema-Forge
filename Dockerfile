@@ -1,32 +1,19 @@
-FROM node:24-alpine
-
-ARG VERSION=unknown
-ARG BUILD_DATE
-ARG VCS_REF
-
-LABEL org.opencontainers.image.title="SQL Visualizer" \
-      org.opencontainers.image.version="${VERSION}" \
-      org.opencontainers.image.created="${BUILD_DATE}" \
-      org.opencontainers.image.revision="${VCS_REF}" \
-      org.opencontainers.image.vendor="SQL Visualizer"
+FROM node:22-alpine AS builder
 
 WORKDIR /app
-
-# Copy changelog and package files
-COPY CHANGELOG.md* ./
 COPY package*.json ./
-
-# Install dependencies
-RUN npm ci --only=production
-
-# Copy application code
+RUN npm ci
 COPY . .
-
-# Build the application
 RUN npm run build
 
-# Expose port
-EXPOSE 3000
+FROM node:22-alpine AS runner
 
-# Start the application
-CMD ["npm", "start"]
+WORKDIR /app
+ENV NODE_ENV=production
+
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/public ./public
+
+EXPOSE 3000
+CMD ["node", "server.js"]
