@@ -2,10 +2,7 @@
 
 import { useState, useCallback } from 'react'
 import type { ParsedSchema, Table, Column } from '../lib/types'
-
-function uid(): string {
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`
-}
+import { uid } from '../lib/uid'
 
 function makeColumn(overrides: Partial<Column> = {}): Column {
   return {

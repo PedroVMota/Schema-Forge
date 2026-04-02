@@ -3,6 +3,7 @@
 import { memo, useState, useRef, useEffect, useCallback } from 'react'
 import { Handle, Position, type NodeProps } from '@xyflow/react'
 import type { Column } from '../lib/types'
+import { IconTable, IconTrash, IconPlus } from './icons'
 import ColumnEditor from './column-editor'
 
 interface TableNodeData {
@@ -104,10 +105,7 @@ function TableNode({ data }: NodeProps) {
           color: 'var(--t-text-on-color)',
         }}
       >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="opacity-70 shrink-0">
-          <rect x="3" y="3" width="18" height="18" rx="2" />
-          <path d="M3 9h18M9 3v18" />
-        </svg>
+        <IconTable size={14} className="opacity-70 shrink-0" />
 
         {editingName ? (
           <input
@@ -143,9 +141,7 @@ function TableNode({ data }: NodeProps) {
           onClick={(e) => { e.stopPropagation(); onRemoveTable(tableId) }}
           title="Delete table"
         >
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 6h18M8 6V4h8v2M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6" />
-          </svg>
+          <IconTrash size={12} />
         </button>
       </div>
 
@@ -223,9 +219,7 @@ function TableNode({ data }: NodeProps) {
         }}
         onClick={(e) => { e.stopPropagation(); onAddColumn(tableId) }}
       >
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 5v14M5 12h14" />
-        </svg>
+        <IconPlus size={12} />
         Add Column
       </button>
     </div>

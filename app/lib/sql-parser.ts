@@ -1,9 +1,5 @@
 import type { Column, Table, Relation, ParsedSchema } from './types'
-
-let _counter = 0
-function uid(): string {
-  return `${Date.now().toString(36)}-${(++_counter).toString(36)}-${Math.random().toString(36).slice(2, 7)}`
-}
+import { uid } from './uid'
 
 export function parseSQL(sql: string): ParsedSchema {
   const tables: Table[] = []

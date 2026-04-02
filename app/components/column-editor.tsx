@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import type { Column } from '../lib/types'
 import { SQL_TYPES } from '../lib/types'
+import { IconClose } from './icons'
 
 interface ColumnEditorProps {
   column: Column
@@ -202,9 +203,7 @@ export default function ColumnEditor({ column, onUpdate, onRemove }: ColumnEdito
         onClick={(e) => { e.stopPropagation(); onRemove() }}
         title="Remove column"
       >
-        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-          <path d="M18 6L6 18M6 6l12 12" />
-        </svg>
+        <IconClose size={10} strokeWidth={2.5} />
       </button>
     </div>
   )

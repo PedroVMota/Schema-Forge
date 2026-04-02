@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import type { Project } from '../lib/types'
+import { IconPlus, IconClose, IconPencil, IconTrash, IconFolder, IconCheck } from './icons'
+import { IconButton, PanelHeader, Divider } from './ui'
 
 interface ProjectSidebarProps {
   projects: Project[]
@@ -54,47 +56,23 @@ export default function ProjectSidebar({
         maxHeight: 'calc(100vh - 32px)',
       }}
     >
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 shrink-0">
-        <div className="flex items-center gap-2">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ color: 'var(--t-primary)' }}>
-            <path d="M3 7V5a2 2 0 012-2h4l2 2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2v-2" />
-          </svg>
-          <h2 className="font-semibold text-xs uppercase tracking-widest" style={{ color: 'var(--t-text-2)' }}>
-            Projects
-          </h2>
-        </div>
-        <div className="flex items-center gap-1">
-          <button
-            onClick={() => setIsCreating(true)}
-            className="w-7 h-7 flex items-center justify-center rounded-xl text-sm transition-all duration-200"
-            style={{ color: 'var(--t-primary)' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--t-primary-dim)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}
-            title="New project"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <path d="M12 5v14M5 12h14" />
-            </svg>
-          </button>
-          <button
-            onClick={onClose}
-            className="w-7 h-7 flex items-center justify-center rounded-xl text-sm transition-all duration-200"
-            style={{ color: 'var(--t-text-3)' }}
-            onMouseEnter={e => { e.currentTarget.style.background = 'var(--t-hover-overlay)'; e.currentTarget.style.color = 'var(--t-text-1)' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--t-text-3)' }}
-            title="Close"
-          >
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M18 6L6 18M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-      </div>
+      <PanelHeader
+        icon={<IconFolder size={14} />}
+        title="Projects"
+        trailing={
+          <>
+            <IconButton hover="primary" title="New project" onClick={() => setIsCreating(true)} style={{ color: 'var(--t-primary)' }}>
+              <IconPlus size={14} strokeWidth={2.5} />
+            </IconButton>
+            <IconButton title="Close" onClick={onClose}>
+              <IconClose size={14} />
+            </IconButton>
+          </>
+        }
+      />
 
-      {/* Create input */}
       {isCreating && (
-        <div className="px-3 pb-2 shrink-0">
+        <div className="px-3 pb-2 pt-2 shrink-0">
           <div className="flex gap-1.5">
             <input
               value={newName}
@@ -112,18 +90,14 @@ export default function ProjectSidebar({
               className="btn-primary w-8 h-8 flex items-center justify-center rounded-lg shrink-0"
               style={{ color: 'var(--t-text-on-color)' }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <polyline points="20 6 9 17 4 12" />
-              </svg>
+              <IconCheck size={14} strokeWidth={2.5} />
             </button>
           </div>
         </div>
       )}
 
-      {/* Divider */}
-      <div className="mx-3" style={{ borderTop: '1px solid var(--t-row-border)' }} />
+      <Divider />
 
-      {/* Project list */}
       <div className="flex-1 overflow-y-auto py-2 px-2 min-h-0">
         {projects.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-8 gap-3">
@@ -131,9 +105,7 @@ export default function ProjectSidebar({
               className="w-10 h-10 rounded-xl flex items-center justify-center"
               style={{ background: 'var(--t-input-bg)' }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" style={{ color: 'var(--t-text-3)' }}>
-                <path d="M3 7V5a2 2 0 012-2h4l2 2h8a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2v-2" />
-              </svg>
+              <IconFolder size={20} strokeWidth={1.5} className="opacity-40" />
             </div>
             <span className="text-[11px]" style={{ color: 'var(--t-text-3)' }}>No projects yet</span>
             <button
@@ -150,23 +122,15 @@ export default function ProjectSidebar({
           <div className="flex flex-col gap-1">
             {projects.map(project => {
               const isActive = project.id === activeId
-
               return (
                 <div
                   key={project.id}
                   className="group flex items-center gap-2.5 px-3 py-2 cursor-pointer rounded-xl transition-all duration-200"
-                  style={{
-                    background: isActive ? 'var(--t-active-bg)' : 'transparent',
-                  }}
+                  style={{ background: isActive ? 'var(--t-active-bg)' : 'transparent' }}
                   onClick={() => onSwitch(project.id)}
-                  onMouseEnter={e => {
-                    if (!isActive) e.currentTarget.style.background = 'var(--t-hover-overlay)'
-                  }}
-                  onMouseLeave={e => {
-                    if (!isActive) e.currentTarget.style.background = 'transparent'
-                  }}
+                  onMouseEnter={e => { if (!isActive) e.currentTarget.style.background = 'var(--t-hover-overlay)' }}
+                  onMouseLeave={e => { if (!isActive) e.currentTarget.style.background = 'transparent' }}
                 >
-                  {/* Dot indicator */}
                   <div
                     className="w-2 h-2 rounded-full shrink-0 transition-all duration-200"
                     style={{
@@ -174,7 +138,6 @@ export default function ProjectSidebar({
                       boxShadow: isActive ? '0 0 8px var(--t-primary)' : 'none',
                     }}
                   />
-
                   {editingId === project.id ? (
                     <input
                       value={editName}
@@ -190,10 +153,7 @@ export default function ProjectSidebar({
                     />
                   ) : (
                     <div className="flex-1 min-w-0">
-                      <span
-                        className="block truncate text-xs font-medium"
-                        style={{ color: isActive ? 'var(--t-primary)' : 'var(--t-text-1)' }}
-                      >
+                      <span className="block truncate text-xs font-medium" style={{ color: isActive ? 'var(--t-primary)' : 'var(--t-text-1)' }}>
                         {project.name}
                       </span>
                       <span className="block text-[10px] mt-0.5" style={{ color: 'var(--t-text-3)' }}>
@@ -201,33 +161,13 @@ export default function ProjectSidebar({
                       </span>
                     </div>
                   )}
-
-                  {/* Actions */}
                   <div className="flex items-center gap-0.5 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                    <button
-                      onClick={e => { e.stopPropagation(); setEditingId(project.id); setEditName(project.name) }}
-                      className="w-6 h-6 flex items-center justify-center rounded-lg transition-colors"
-                      style={{ color: 'var(--t-text-3)' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-text-1)'; e.currentTarget.style.background = 'var(--t-hover-overlay)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = 'var(--t-text-3)'; e.currentTarget.style.background = 'transparent' }}
-                      title="Rename"
-                    >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M17 3a2.85 2.85 0 114 4L7.5 20.5 2 22l1.5-5.5z" />
-                      </svg>
-                    </button>
-                    <button
-                      onClick={e => { e.stopPropagation(); onDelete(project.id) }}
-                      className="w-6 h-6 flex items-center justify-center rounded-lg transition-colors"
-                      style={{ color: 'var(--t-text-3)' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--t-danger)'; e.currentTarget.style.background = 'var(--t-nn-bg)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = 'var(--t-text-3)'; e.currentTarget.style.background = 'transparent' }}
-                      title="Delete"
-                    >
-                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M3 6h18M8 6V4h8v2M5 6v14a2 2 0 002 2h10a2 2 0 002-2V6" />
-                      </svg>
-                    </button>
+                    <IconButton size="sm" onClick={e => { e.stopPropagation(); setEditingId(project.id); setEditName(project.name) }} title="Rename">
+                      <IconPencil size={11} />
+                    </IconButton>
+                    <IconButton size="sm" hover="danger" onClick={e => { e.stopPropagation(); onDelete(project.id) }} title="Delete">
+                      <IconTrash size={11} />
+                    </IconButton>
                   </div>
                 </div>
               )
@@ -236,11 +176,10 @@ export default function ProjectSidebar({
         )}
       </div>
 
-      {/* Footer with count */}
       {projects.length > 0 && (
         <>
-          <div className="mx-3" style={{ borderTop: '1px solid var(--t-row-border)' }} />
-          <div className="px-4 py-2.5 shrink-0 flex items-center justify-between">
+          <Divider />
+          <div className="px-4 py-2.5 shrink-0">
             <span className="text-[10px]" style={{ color: 'var(--t-text-3)' }}>
               {projects.length} project{projects.length !== 1 ? 's' : ''}
             </span>

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import type { ThemeId, CustomColors } from '../hooks/use-theme'
+import { IconPlus, IconCode, IconPrisma, IconCopy } from './icons'
 import ThemeSwitcher from './theme-switcher'
 
 interface CanvasToolbarProps {
@@ -22,9 +23,9 @@ export default function CanvasToolbar({
   onAddTable,
   onToggleSQL,
   onExportSQL,
+  onImportPrisma,
   tableCount,
   relationCount,
-  onImportPrisma,
   colors,
   onColorsChange,
   onColorsReset,
@@ -87,50 +88,23 @@ export default function CanvasToolbar({
           className="btn-primary text-xs font-medium py-2 px-4 rounded-xl flex items-center gap-1.5"
           style={{ color: 'var(--t-text-on-color)' }}
         >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M12 5v14M5 12h14" />
-          </svg>
+          <IconPlus size={14} />
           Add Table
         </button>
       )}
 
-      <button
-        onClick={onToggleSQL}
-        className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs"
-        style={{ color: 'var(--t-text-2)' }}
-        title="Toggle SQL editor"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <polyline points="16 18 22 12 16 6" />
-          <polyline points="8 6 2 12 8 18" />
-        </svg>
+      <button onClick={onToggleSQL} className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs" style={{ color: 'var(--t-text-2)' }} title="Toggle SQL editor">
+        <IconCode size={14} />
         SQL
       </button>
 
-      <button
-        onClick={onImportPrisma}
-        className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs"
-        style={{ color: 'var(--t-text-2)' }}
-        title="Import Prisma schema"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <path d="M12 2L2 7l10 5 10-5-10-5z" />
-          <path d="M2 17l10 5 10-5" />
-          <path d="M2 12l10 5 10-5" />
-        </svg>
+      <button onClick={onImportPrisma} className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs" style={{ color: 'var(--t-text-2)' }} title="Import Prisma schema">
+        <IconPrisma size={14} />
         Prisma
       </button>
 
-      <button
-        onClick={onExportSQL}
-        className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs"
-        style={{ color: 'var(--t-text-2)' }}
-        title="Copy SQL to clipboard"
-      >
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-          <rect x="9" y="9" width="13" height="13" rx="2" />
-          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
-        </svg>
+      <button onClick={onExportSQL} className="glass-btn py-2 px-3 rounded-xl flex items-center gap-1.5 text-xs" style={{ color: 'var(--t-text-2)' }} title="Copy SQL to clipboard">
+        <IconCopy size={14} />
         Copy
       </button>
 

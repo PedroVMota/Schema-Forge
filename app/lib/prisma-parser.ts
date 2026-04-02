@@ -1,9 +1,5 @@
 import type { Column, Table, Relation, ParsedSchema } from './types'
-
-let _counter = 0
-function uid(): string {
-  return `${Date.now().toString(36)}-${(++_counter).toString(36)}-${Math.random().toString(36).slice(2, 7)}`
-}
+import { uid } from './uid'
 
 const PRISMA_TYPE_MAP: Record<string, string> = {
   'String': 'VARCHAR(255)',
@@ -90,10 +86,6 @@ function parseModels(schema: string): PrismaModel[] {
   }
 
   return models
-}
-
-function isScalarType(type: string): boolean {
-  return type in PRISMA_TYPE_MAP || ['Enum'].includes(type)
 }
 
 function getRelationInfo(field: PrismaField): { fields: string[]; references: string[] } | null {
