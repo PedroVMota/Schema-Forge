@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Schema Forge
 
-## Getting Started
+> Visual database schema editor that runs entirely in your browser.
 
-First, run the development server:
+<!-- TODO: Add hero screenshot -->
+![Schema Forge](./docs/assets/screenshots/overview.png)
+
+Design database schemas visually — create tables, define columns, draw relationships, and export production-ready SQL. No sign-up, no backend, no data leaves your machine.
+
+## Features
+
+- **Visual canvas** — drag-and-drop tables with an interactive ERD editor
+- **SQL import & export** — paste CREATE TABLE statements or export your design as SQL
+- **Prisma import** — visualize Prisma schema files as diagrams
+- **Multiple projects** — organize schemas with local persistence
+- **Dark & light themes** — with 6 color schemes
+- **Zero backend** — everything runs client-side in your browser
+
+## Quick Start
+
+### Use online
+
+<!-- TODO: Add URL -->
+Visit [schema-forge.example.com](#) — no installation needed.
+
+### Run locally
 
 ```bash
+git clone https://github.com/PedroVMota/Schema-Forge.git
+cd Schema-Forge
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Docker
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+docker pull ghcr.io/pedrovmota/schema-forge:latest
+docker run -p 3000:3000 ghcr.io/pedrovmota/schema-forge:latest
+```
 
-## Learn More
+## Documentation
 
-To learn more about Next.js, take a look at the following resources:
+Full documentation is available in the [`docs/`](./docs/README.md) directory:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Introduction](./docs/introduction.md)
+- [Getting Started](./docs/getting-started.md)
+- [Features](./docs/features/README.md)
+- [Self-Hosting](./docs/self-hosting.md)
+- [Contributing](./docs/contributing.md)
+- [Architecture](./docs/architecture.md)
+- [FAQ](./docs/faq.md)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Tech Stack
 
-## Deploy on Vercel
+- [Next.js](https://nextjs.org/) 16 — App framework
+- [React](https://react.dev/) 19 — UI library
+- [@xyflow/react](https://reactflow.dev/) — Interactive diagrams
+- [TypeScript](https://www.typescriptlang.org/) — Type safety
+- [Tailwind CSS](https://tailwindcss.com/) 4 — Styling
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! See the [Contributing Guide](./docs/contributing.md) for details.
+
+## License
+
+<!-- TODO: Add license -->
+See [LICENSE](./LICENSE) for details.
