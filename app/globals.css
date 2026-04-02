@@ -1,26 +1,549 @@
 @import "tailwindcss";
+@import "@xyflow/react/dist/style.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===== Theme tokens ===== */
+
+[data-theme="glass-dark"] {
+  --t-bg: #06060e;
+  --t-panel: rgba(12, 13, 24, 0.75);
+  --t-panel-border: rgba(255, 255, 255, 0.07);
+  --t-node-bg: rgba(12, 13, 24, 0.75);
+  --t-node-border: rgba(255, 255, 255, 0.08);
+  --t-handle-ring: rgba(12, 13, 24, 0.8);
+  --t-row-border: rgba(255, 255, 255, 0.04);
+  --t-row-pk: rgba(251, 191, 36, 0.04);
+  --t-row-fk: rgba(0, 212, 255, 0.03);
+  --t-row-hover: rgba(255, 255, 255, 0.04);
+  --t-input-bg: rgba(255, 255, 255, 0.04);
+  --t-input-border: rgba(255, 255, 255, 0.08);
+  --t-dropdown-bg: rgba(12, 13, 24, 0.95);
+  --t-text-1: rgba(255, 255, 255, 0.85);
+  --t-text-2: rgba(255, 255, 255, 0.5);
+  --t-text-3: rgba(255, 255, 255, 0.25);
+  --t-text-4: rgba(255, 255, 255, 0.15);
+  --t-text-on-color: #ffffff;
+  --t-primary: #6c63ff;
+  --t-primary-dim: rgba(108, 99, 255, 0.15);
+  --t-primary-border: rgba(108, 99, 255, 0.3);
+  --t-accent: #00d4ff;
+  --t-danger: #ff4d6a;
+  --t-pk-color: #fbbf24;
+  --t-pk-bg: rgba(251, 191, 36, 0.2);
+  --t-pk-border: rgba(251, 191, 36, 0.3);
+  --t-fk-color: #00d4ff;
+  --t-fk-bg: rgba(0, 212, 255, 0.15);
+  --t-fk-border: rgba(0, 212, 255, 0.25);
+  --t-nn-color: #ff4d6a;
+  --t-nn-bg: rgba(255, 77, 106, 0.1);
+  --t-uq-color: #00d4ff;
+  --t-uq-bg: rgba(0, 212, 255, 0.1);
+  --t-inactive: rgba(255, 255, 255, 0.15);
+  --t-type-bg: rgba(255, 255, 255, 0.04);
+  --t-type-color: rgba(255, 255, 255, 0.4);
+  --t-dots: rgba(255, 255, 255, 0.04);
+  --t-minimap-bg: rgba(12, 13, 24, 0.7);
+  --t-minimap-mask: rgba(6, 6, 14, 0.75);
+  --t-controls-bg: rgba(12, 13, 24, 0.8);
+  --t-controls-text: rgba(255, 255, 255, 0.6);
+  --t-controls-border: rgba(255, 255, 255, 0.06);
+  --t-controls-hover: rgba(255, 255, 255, 0.08);
+  --t-edge-label: rgba(255, 255, 255, 0.45);
+  --t-edge-label-bg: rgba(12, 13, 24, 0.85);
+  --t-edge-glow: drop-shadow(0 0 4px rgba(108, 99, 255, 0.3));
+  --t-blur: blur(24px) saturate(1.4);
+  --t-node-blur: blur(20px) saturate(1.4);
+  --t-mesh: 1;
+  --t-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --t-node-inset: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --t-header-border: rgba(255, 255, 255, 0.1);
+  --t-header-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  --t-grad-fade: rgba(12, 13, 24, 0.5);
+  --t-scrollbar: rgba(255, 255, 255, 0.08);
+  --t-active-bg: rgba(108, 99, 255, 0.12);
+  --t-active-border: #6c63ff;
+  --t-hover-overlay: rgba(255, 255, 255, 0.04);
+  --t-delete-hover: rgba(255, 77, 106, 0.3);
+  --t-delete-bg: rgba(0, 0, 0, 0.2);
+  --t-name-hover: rgba(255, 255, 255, 0.1);
+  --t-btn-glass-bg: rgba(255, 255, 255, 0.05);
+  --t-btn-glass-border: rgba(255, 255, 255, 0.08);
+  --t-btn-glass-hover: rgba(255, 255, 255, 0.1);
+  --t-btn-glass-hover-border: rgba(255, 255, 255, 0.15);
+  --t-btn-primary: linear-gradient(135deg, #6c63ff 0%, #5a4fff 50%, #7c6cff 100%);
+  --t-btn-primary-shadow: 0 0 20px rgba(108, 99, 255, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  --t-btn-primary-hover-shadow: 0 0 30px rgba(108, 99, 255, 0.35), inset 0 1px 0 rgba(255,255,255,0.15);
+  --t-success: #34d399;
+  --t-success-bg: rgba(52, 211, 153, 0.1);
+  --t-success-border: rgba(52, 211, 153, 0.2);
+  --t-error-bg: rgba(255, 77, 106, 0.1);
+  --t-error-border: rgba(255, 77, 106, 0.2);
+  --t-conn-line: #6c63ff;
+  --t-edge-gradient-1: #6c63ff;
+  --t-edge-gradient-2: #00d4ff;
+  --t-edge-gradient-3: #ff6ec7;
+  --t-hero-gradient: linear-gradient(135deg, #e8eaf6, rgba(255,255,255,0.6));
+  --t-logo-gradient: linear-gradient(135deg, #6c63ff, #00d4ff);
+  --t-logo-shadow: 0 0 40px rgba(108, 99, 255, 0.3);
+  --t-mode-active-bg: rgba(108, 99, 255, 0.15);
+  --t-mode-active-color: #6c63ff;
+  --t-mode-inactive-bg: rgba(255, 255, 255, 0.05);
+  --t-mode-inactive-color: rgba(255, 255, 255, 0.3);
+  --t-caret: #6c63ff;
+  --t-stat-dot-1: #6c63ff;
+  --t-stat-dot-2: #00d4ff;
+  color-scheme: dark;
 }
 
+[data-theme="glass-light"] {
+  --t-bg: #f0f2f8;
+  --t-panel: rgba(255, 255, 255, 0.65);
+  --t-panel-border: rgba(0, 0, 0, 0.08);
+  --t-node-bg: rgba(255, 255, 255, 0.7);
+  --t-node-border: rgba(0, 0, 0, 0.08);
+  --t-handle-ring: rgba(255, 255, 255, 0.9);
+  --t-row-border: rgba(0, 0, 0, 0.05);
+  --t-row-pk: rgba(251, 191, 36, 0.08);
+  --t-row-fk: rgba(79, 70, 229, 0.05);
+  --t-row-hover: rgba(0, 0, 0, 0.03);
+  --t-input-bg: rgba(0, 0, 0, 0.04);
+  --t-input-border: rgba(0, 0, 0, 0.1);
+  --t-dropdown-bg: rgba(255, 255, 255, 0.95);
+  --t-text-1: rgba(0, 0, 0, 0.8);
+  --t-text-2: rgba(0, 0, 0, 0.5);
+  --t-text-3: rgba(0, 0, 0, 0.3);
+  --t-text-4: rgba(0, 0, 0, 0.15);
+  --t-text-on-color: #ffffff;
+  --t-primary: #4f46e5;
+  --t-primary-dim: rgba(79, 70, 229, 0.1);
+  --t-primary-border: rgba(79, 70, 229, 0.25);
+  --t-accent: #0891b2;
+  --t-danger: #e11d48;
+  --t-pk-color: #d97706;
+  --t-pk-bg: rgba(217, 119, 6, 0.12);
+  --t-pk-border: rgba(217, 119, 6, 0.25);
+  --t-fk-color: #0891b2;
+  --t-fk-bg: rgba(8, 145, 178, 0.1);
+  --t-fk-border: rgba(8, 145, 178, 0.2);
+  --t-nn-color: #e11d48;
+  --t-nn-bg: rgba(225, 29, 72, 0.08);
+  --t-uq-color: #0891b2;
+  --t-uq-bg: rgba(8, 145, 178, 0.08);
+  --t-inactive: rgba(0, 0, 0, 0.15);
+  --t-type-bg: rgba(0, 0, 0, 0.04);
+  --t-type-color: rgba(0, 0, 0, 0.4);
+  --t-dots: rgba(0, 0, 0, 0.06);
+  --t-minimap-bg: rgba(255, 255, 255, 0.7);
+  --t-minimap-mask: rgba(240, 242, 248, 0.7);
+  --t-controls-bg: rgba(255, 255, 255, 0.8);
+  --t-controls-text: rgba(0, 0, 0, 0.5);
+  --t-controls-border: rgba(0, 0, 0, 0.08);
+  --t-controls-hover: rgba(0, 0, 0, 0.05);
+  --t-edge-label: rgba(0, 0, 0, 0.4);
+  --t-edge-label-bg: rgba(255, 255, 255, 0.9);
+  --t-edge-glow: drop-shadow(0 0 3px rgba(79, 70, 229, 0.2));
+  --t-blur: blur(20px) saturate(1.2);
+  --t-node-blur: blur(16px) saturate(1.2);
+  --t-mesh: 1;
+  --t-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  --t-node-inset: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --t-header-border: rgba(255, 255, 255, 0.3);
+  --t-header-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  --t-grad-fade: rgba(255, 255, 255, 0.5);
+  --t-scrollbar: rgba(0, 0, 0, 0.1);
+  --t-active-bg: rgba(79, 70, 229, 0.1);
+  --t-active-border: #4f46e5;
+  --t-hover-overlay: rgba(0, 0, 0, 0.03);
+  --t-delete-hover: rgba(225, 29, 72, 0.15);
+  --t-delete-bg: rgba(0, 0, 0, 0.05);
+  --t-name-hover: rgba(0, 0, 0, 0.05);
+  --t-btn-glass-bg: rgba(255, 255, 255, 0.6);
+  --t-btn-glass-border: rgba(0, 0, 0, 0.1);
+  --t-btn-glass-hover: rgba(255, 255, 255, 0.8);
+  --t-btn-glass-hover-border: rgba(0, 0, 0, 0.15);
+  --t-btn-primary: linear-gradient(135deg, #4f46e5 0%, #4338ca 50%, #6366f1 100%);
+  --t-btn-primary-shadow: 0 2px 12px rgba(79, 70, 229, 0.25), inset 0 1px 0 rgba(255,255,255,0.2);
+  --t-btn-primary-hover-shadow: 0 4px 20px rgba(79, 70, 229, 0.35), inset 0 1px 0 rgba(255,255,255,0.25);
+  --t-success: #059669;
+  --t-success-bg: rgba(5, 150, 105, 0.08);
+  --t-success-border: rgba(5, 150, 105, 0.2);
+  --t-error-bg: rgba(225, 29, 72, 0.08);
+  --t-error-border: rgba(225, 29, 72, 0.15);
+  --t-conn-line: #4f46e5;
+  --t-edge-gradient-1: #4f46e5;
+  --t-edge-gradient-2: #0891b2;
+  --t-edge-gradient-3: #db2777;
+  --t-hero-gradient: linear-gradient(135deg, #1e1b4b, rgba(0,0,0,0.7));
+  --t-logo-gradient: linear-gradient(135deg, #4f46e5, #0891b2);
+  --t-logo-shadow: 0 0 30px rgba(79, 70, 229, 0.2);
+  --t-mode-active-bg: rgba(79, 70, 229, 0.12);
+  --t-mode-active-color: #4f46e5;
+  --t-mode-inactive-bg: rgba(0, 0, 0, 0.04);
+  --t-mode-inactive-color: rgba(0, 0, 0, 0.3);
+  --t-caret: #4f46e5;
+  --t-stat-dot-1: #4f46e5;
+  --t-stat-dot-2: #0891b2;
+  color-scheme: light;
+}
+
+[data-theme="minimal-dark"] {
+  --t-bg: #111111;
+  --t-panel: #1a1a1a;
+  --t-panel-border: #2a2a2a;
+  --t-node-bg: #1a1a1a;
+  --t-node-border: #2a2a2a;
+  --t-handle-ring: #1a1a1a;
+  --t-row-border: #222222;
+  --t-row-pk: rgba(251, 191, 36, 0.06);
+  --t-row-fk: rgba(99, 102, 241, 0.05);
+  --t-row-hover: #222222;
+  --t-input-bg: #222222;
+  --t-input-border: #333333;
+  --t-dropdown-bg: #1a1a1a;
+  --t-text-1: #e5e5e5;
+  --t-text-2: #888888;
+  --t-text-3: #555555;
+  --t-text-4: #333333;
+  --t-text-on-color: #ffffff;
+  --t-primary: #818cf8;
+  --t-primary-dim: rgba(129, 140, 248, 0.12);
+  --t-primary-border: rgba(129, 140, 248, 0.3);
+  --t-accent: #67e8f9;
+  --t-danger: #fb7185;
+  --t-pk-color: #fbbf24;
+  --t-pk-bg: rgba(251, 191, 36, 0.12);
+  --t-pk-border: rgba(251, 191, 36, 0.25);
+  --t-fk-color: #67e8f9;
+  --t-fk-bg: rgba(103, 232, 249, 0.1);
+  --t-fk-border: rgba(103, 232, 249, 0.2);
+  --t-nn-color: #fb7185;
+  --t-nn-bg: rgba(251, 113, 133, 0.1);
+  --t-uq-color: #67e8f9;
+  --t-uq-bg: rgba(103, 232, 249, 0.08);
+  --t-inactive: #444444;
+  --t-type-bg: #222222;
+  --t-type-color: #777777;
+  --t-dots: #1e1e1e;
+  --t-minimap-bg: #1a1a1a;
+  --t-minimap-mask: rgba(17, 17, 17, 0.8);
+  --t-controls-bg: #1a1a1a;
+  --t-controls-text: #888888;
+  --t-controls-border: #2a2a2a;
+  --t-controls-hover: #252525;
+  --t-edge-label: #777777;
+  --t-edge-label-bg: #1a1a1a;
+  --t-edge-glow: none;
+  --t-blur: none;
+  --t-node-blur: none;
+  --t-mesh: 0;
+  --t-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --t-node-inset: none;
+  --t-header-border: #333333;
+  --t-header-shadow: none;
+  --t-grad-fade: #1a1a1a;
+  --t-scrollbar: #333333;
+  --t-active-bg: rgba(129, 140, 248, 0.1);
+  --t-active-border: #818cf8;
+  --t-hover-overlay: #222222;
+  --t-delete-hover: rgba(251, 113, 133, 0.2);
+  --t-delete-bg: #222222;
+  --t-name-hover: #252525;
+  --t-btn-glass-bg: #222222;
+  --t-btn-glass-border: #333333;
+  --t-btn-glass-hover: #2a2a2a;
+  --t-btn-glass-hover-border: #444444;
+  --t-btn-primary: linear-gradient(135deg, #6366f1, #4f46e5);
+  --t-btn-primary-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+  --t-btn-primary-hover-shadow: 0 4px 16px rgba(99, 102, 241, 0.3);
+  --t-success: #34d399;
+  --t-success-bg: rgba(52, 211, 153, 0.1);
+  --t-success-border: rgba(52, 211, 153, 0.2);
+  --t-error-bg: rgba(251, 113, 133, 0.1);
+  --t-error-border: rgba(251, 113, 133, 0.2);
+  --t-conn-line: #818cf8;
+  --t-edge-gradient-1: #818cf8;
+  --t-edge-gradient-2: #67e8f9;
+  --t-edge-gradient-3: #f472b6;
+  --t-hero-gradient: linear-gradient(135deg, #e5e5e5, #888888);
+  --t-logo-gradient: linear-gradient(135deg, #818cf8, #67e8f9);
+  --t-logo-shadow: none;
+  --t-mode-active-bg: rgba(129, 140, 248, 0.12);
+  --t-mode-active-color: #818cf8;
+  --t-mode-inactive-bg: #222222;
+  --t-mode-inactive-color: #555555;
+  --t-caret: #818cf8;
+  --t-stat-dot-1: #818cf8;
+  --t-stat-dot-2: #67e8f9;
+  color-scheme: dark;
+}
+
+[data-theme="minimal-light"] {
+  --t-bg: #ffffff;
+  --t-panel: #fafafa;
+  --t-panel-border: #e5e5e5;
+  --t-node-bg: #ffffff;
+  --t-node-border: #e0e0e0;
+  --t-handle-ring: #ffffff;
+  --t-row-border: #f0f0f0;
+  --t-row-pk: rgba(217, 119, 6, 0.06);
+  --t-row-fk: rgba(79, 70, 229, 0.04);
+  --t-row-hover: #f8f8f8;
+  --t-input-bg: #f5f5f5;
+  --t-input-border: #e0e0e0;
+  --t-dropdown-bg: #ffffff;
+  --t-text-1: #1a1a1a;
+  --t-text-2: #666666;
+  --t-text-3: #aaaaaa;
+  --t-text-4: #cccccc;
+  --t-text-on-color: #ffffff;
+  --t-primary: #4f46e5;
+  --t-primary-dim: rgba(79, 70, 229, 0.08);
+  --t-primary-border: rgba(79, 70, 229, 0.2);
+  --t-accent: #0891b2;
+  --t-danger: #dc2626;
+  --t-pk-color: #b45309;
+  --t-pk-bg: rgba(180, 83, 9, 0.08);
+  --t-pk-border: rgba(180, 83, 9, 0.2);
+  --t-fk-color: #0891b2;
+  --t-fk-bg: rgba(8, 145, 178, 0.06);
+  --t-fk-border: rgba(8, 145, 178, 0.15);
+  --t-nn-color: #dc2626;
+  --t-nn-bg: rgba(220, 38, 38, 0.06);
+  --t-uq-color: #0891b2;
+  --t-uq-bg: rgba(8, 145, 178, 0.06);
+  --t-inactive: #cccccc;
+  --t-type-bg: #f5f5f5;
+  --t-type-color: #888888;
+  --t-dots: #eaeaea;
+  --t-minimap-bg: #fafafa;
+  --t-minimap-mask: rgba(255, 255, 255, 0.8);
+  --t-controls-bg: #ffffff;
+  --t-controls-text: #666666;
+  --t-controls-border: #e5e5e5;
+  --t-controls-hover: #f5f5f5;
+  --t-edge-label: #888888;
+  --t-edge-label-bg: #ffffff;
+  --t-edge-glow: none;
+  --t-blur: none;
+  --t-node-blur: none;
+  --t-mesh: 0;
+  --t-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --t-node-inset: none;
+  --t-header-border: rgba(255, 255, 255, 0.3);
+  --t-header-shadow: none;
+  --t-grad-fade: #fafafa;
+  --t-scrollbar: #e0e0e0;
+  --t-active-bg: rgba(79, 70, 229, 0.06);
+  --t-active-border: #4f46e5;
+  --t-hover-overlay: #f5f5f5;
+  --t-delete-hover: rgba(220, 38, 38, 0.1);
+  --t-delete-bg: #f0f0f0;
+  --t-name-hover: #f0f0f0;
+  --t-btn-glass-bg: #ffffff;
+  --t-btn-glass-border: #e0e0e0;
+  --t-btn-glass-hover: #f8f8f8;
+  --t-btn-glass-hover-border: #d0d0d0;
+  --t-btn-primary: linear-gradient(135deg, #4f46e5, #4338ca);
+  --t-btn-primary-shadow: 0 1px 6px rgba(79, 70, 229, 0.2);
+  --t-btn-primary-hover-shadow: 0 2px 12px rgba(79, 70, 229, 0.3);
+  --t-success: #059669;
+  --t-success-bg: rgba(5, 150, 105, 0.06);
+  --t-success-border: rgba(5, 150, 105, 0.15);
+  --t-error-bg: rgba(220, 38, 38, 0.06);
+  --t-error-border: rgba(220, 38, 38, 0.12);
+  --t-conn-line: #4f46e5;
+  --t-edge-gradient-1: #4f46e5;
+  --t-edge-gradient-2: #0891b2;
+  --t-edge-gradient-3: #db2777;
+  --t-hero-gradient: linear-gradient(135deg, #1a1a1a, #666666);
+  --t-logo-gradient: linear-gradient(135deg, #4f46e5, #0891b2);
+  --t-logo-shadow: 0 2px 12px rgba(79, 70, 229, 0.15);
+  --t-mode-active-bg: rgba(79, 70, 229, 0.08);
+  --t-mode-active-color: #4f46e5;
+  --t-mode-inactive-bg: #f0f0f0;
+  --t-mode-inactive-color: #aaaaaa;
+  --t-caret: #4f46e5;
+  --t-stat-dot-1: #4f46e5;
+  --t-stat-dot-2: #0891b2;
+  color-scheme: light;
+}
+
+/* ===== Tailwind theme bridge ===== */
+
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--t-bg);
+  --color-foreground: var(--t-text-1);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Base ===== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--t-scrollbar) transparent;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--t-bg);
+  color: var(--t-text-1);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* ===== Mesh background ===== */
+
+.mesh-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: var(--t-bg);
+  opacity: var(--t-mesh);
+}
+
+.mesh-bg::before {
+  content: '';
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  top: -10%;
+  right: -5%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--t-primary) 12%, transparent) 0%, transparent 70%);
+  animation: float-1 20s ease-in-out infinite;
+}
+
+.mesh-bg::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  bottom: -10%;
+  left: 10%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--t-accent) 8%, transparent) 0%, transparent 70%);
+  animation: float-2 25s ease-in-out infinite;
+}
+
+.mesh-orb {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 40%;
+  left: 50%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--t-danger) 7%, transparent) 0%, transparent 70%);
+  animation: float-3 22s ease-in-out infinite;
+}
+
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-40px, 30px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.95); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.05); }
+  66% { transform: translate(-20px, 20px) scale(1.1); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translate(-50%, 0) scale(1); }
+  50% { transform: translate(-50%, -30px) scale(1.08); }
+}
+
+/* ===== Reusable classes ===== */
+
+.glass-panel {
+  background: var(--t-panel);
+  backdrop-filter: var(--t-blur);
+  -webkit-backdrop-filter: var(--t-blur);
+  border: 1px solid var(--t-panel-border);
+}
+
+.glass-btn {
+  background: var(--t-btn-glass-bg);
+  border: 1px solid var(--t-btn-glass-border);
+  backdrop-filter: var(--t-blur);
+  -webkit-backdrop-filter: var(--t-blur);
+  transition: all 0.2s ease;
+}
+
+.glass-btn:hover {
+  background: var(--t-btn-glass-hover);
+  border-color: var(--t-btn-glass-hover-border);
+}
+
+.btn-primary {
+  background: var(--t-btn-primary);
+  border: 1px solid var(--t-primary-border);
+  box-shadow: var(--t-btn-primary-shadow);
+  transition: all 0.25s ease;
+}
+
+.btn-primary:hover {
+  box-shadow: var(--t-btn-primary-hover-shadow);
+  transform: translateY(-1px);
+}
+
+.glow-input {
+  background: var(--t-input-bg);
+  border: 1px solid var(--t-input-border);
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  color: var(--t-text-1);
+}
+
+.glow-input:focus {
+  border-color: var(--t-primary);
+  box-shadow: 0 0 12px color-mix(in srgb, var(--t-primary) 20%, transparent);
+  outline: none;
+}
+
+.glow-input::placeholder {
+  color: var(--t-text-3);
+}
+
+/* ===== ReactFlow overrides ===== */
+
+.react-flow__background {
+  background-color: transparent !important;
+}
+
+.react-flow__minimap {
+  background: var(--t-minimap-bg) !important;
+  backdrop-filter: var(--t-blur) !important;
+  border: 1px solid var(--t-panel-border) !important;
+  border-radius: 12px !important;
+}
+
+.react-flow__controls {
+  border: 1px solid var(--t-controls-border) !important;
+  border-radius: 12px !important;
+  overflow: hidden;
+  backdrop-filter: var(--t-blur) !important;
+  box-shadow: var(--t-shadow) !important;
+}
+
+.react-flow__controls button {
+  background: var(--t-controls-bg) !important;
+  color: var(--t-controls-text) !important;
+  border-color: var(--t-controls-border) !important;
+  transition: all 0.2s ease !important;
+}
+
+.react-flow__controls button:hover {
+  background: var(--t-controls-hover) !important;
+}
+
+.react-flow__controls button svg {
+  fill: currentColor !important;
+}
+
+.react-flow__edge-text {
+  fill: var(--t-edge-label) !important;
+}
+
+.react-flow__edge-textbg {
+  fill: var(--t-edge-label-bg) !important;
+  rx: 6 !important;
+  stroke: var(--t-panel-border) !important;
+  stroke-width: 1 !important;
 }
